@@ -148,6 +148,14 @@ var GATE_USER="panhao", GATE_PASS="panhao123", GATE_KEY="admin_auth";
   try{ if(sessionStorage.getItem(GATE_KEY)==="1"){ var g=document.getElementById("gateOverlay"); if(g) g.remove(); return; } }catch(e){}
   document.getElementById("gateP").addEventListener("keydown",function(e){ if(e.key==="Enter") gateLogin(); });
 })();
+window.addEventListener("message",function(e){
+  if(e.origin!=="https://phgithum.github.io")return;
+  var d=e.data||{};
+  if(d.gateUser===GATE_USER && d.gatePass===GATE_PASS){
+    try{sessionStorage.setItem(GATE_KEY,"1")}catch(err){}
+    var g=document.getElementById("gateOverlay"); if(g) g.remove();
+  }
+});
 function gateLogin(){
   var u=document.getElementById("gateU").value.trim(), p=document.getElementById("gateP").value;
   if(u===GATE_USER && p===GATE_PASS){
